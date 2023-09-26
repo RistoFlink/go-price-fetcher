@@ -1,19 +1,23 @@
 package main
 
 import (
-	"context"
-	"fmt"
-	"log"
+	"flag"
 )
 
 func main() {
+	listenAddr := flag.String("listenaddr", ":3000", "The service is running on address")
+	flag.Parse()
+
 	svc := NewLoggingService(NewMetricService(&priceFetcher{}))
 
-	price, err := svc.FetchPrice(context.Background(), "BTC")
+	server := NewJsonApiServer(*listenAddr, svc)
+	server.Run()
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	// price, err := svc.FetchPrice(context.Background(), "BTC")
 
-	fmt.Println(price)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	//fmt.Println(price)
 }
