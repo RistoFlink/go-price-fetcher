@@ -1,23 +1,11 @@
 package main
 
 import (
-	"context"
 	"flag"
-	"fmt"
-	"log"
-	"main/client"
 )
 
 func main() {
-	client := client.New("http://localhost:3000")
-	price, err := client.FetchPrice(context.Background(), "ET")
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("%+v\n", price)
-	return
-
-	listenAddr := flag.String("listenaddr", ":3000", "The service is running on address")
+	listenAddr := flag.String("listenaddr", ":3000", "address the service is running on")
 	flag.Parse()
 
 	svc := NewLoggingService(NewMetricService(&priceFetcher{}))
@@ -32,4 +20,11 @@ func main() {
 	// }
 
 	//fmt.Println(price)
+
+	/* 	client := client.New("http://localhost:3000")
+	price, err := client.FetchPrice(context.Background(), "ET")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("%+v\n", price) */
 }
